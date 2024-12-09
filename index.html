@@ -1,19 +1,71 @@
-<form id="issueForm" acti on="https://c7327f38-26e2-45b4-a5a8-3e718fe8176f-00-19011i5iuaghc.pike.replit.dev/" method="post">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HR App Issue Request</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required />
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-    <label for="issueType">Issue Type</label>
-    <select id="issueType" name="issueType" required>
-      <option value="location-attendance">Location Attendance Problem</option>
-      <option value="location-addition">Location Addition</option>
-      <option value="other">Other</option>
-    </select>
+    label,
+    input,
+    textarea,
+    select {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+    }
 
-    <label for="description">Description</label>
-    <textarea id="description" name="description" required></textarea>
+    textarea {
+      height: 100px;
+    }
 
-    <button type="submit">Submit</button>
-  </form>
+    button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>HR Mobile App Issue Request</h1>
+    <form
+      id="issueForm"
+      action="https://c7327f38-26e2-45b4-a5a8-3e718fe8176f-00-19011i5iuaghc.pike.replit.dev/"
+      method="post"
+    >
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="issueType">Issue Type</label>
+      <select id="issueType" name="issueType" required>
+        <option value="location-attendance">Location Attendance Problem</option>
+        <option value="location-addition">Location Addition</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
