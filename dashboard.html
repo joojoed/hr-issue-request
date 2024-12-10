@@ -1,0 +1,78 @@
+<!-- public/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - HR App</title>
+  <style>
+    /* Your styles here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Issue Dashboard</h1>
+    <div>
+      <a href="/logout">Logout</a>
+    </div>
+    <table id="issuesTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Issue Type</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Change Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Issues will be populated here by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Fetch issues from the API and populate the table
+    fetch('https://hr-backend.yourusername.repl.co/api/issues', { credentials: 'include' })
+      .then(response => response.json())
+      .then(issues => {
+        const tableBody = document.getElementById('issuesTable').getElementsByTagName('tbody')[0];
+        issues.forEach(issue => {
+          const row = tableBody.insertRow();
+          row.insertCell(0).innerText = issue.name;
+          row.insertCell(1).innerText = issue.email;
+          row.insertCell(2).innerText = issue.issueType;
+          row.insertCell(3).innerText = issue.description;
+          row.insertCell(4).innerText = issue.status;
+
+          const statusCell = row.insertCell(5);
+          const select = document.createElement('select');
+          ['pending', 'in progress', 'resolved'].forEach(statusOption => {
+            const option = document.createElement('option');
+            option.value = statusOption;
+            option.text = statusOption;
+            if (issue.status === statusOption) option.selected = true;
+            select.appendChild(option);
+          });
+          select.addEventListener('change', () => {
+            fetch(`https://hr-backend.yourusername.repl.co/api/issues/${issue._id}/status`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify({ status: select.value }),
+            }).then(response => response.text())
+              .then(message => {
+                alert(message);
+              });
+          });
+          statusCell.appendChild(select);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching issues:', error);
+      });
+  </script>
+</body>
+</html>
