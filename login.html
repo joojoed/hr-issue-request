@@ -64,28 +64,26 @@
       const username = loginForm.username.value;
       const password = loginForm.password.value;
 
-      fetch('https://c7327f38-26e2-45b4-a5a8-3e718fe8176f-00-19011i5iuaghc.pike.replit.dev/login', { // Update with your Replit URL
-        method: 'POST',
-        headers: {
-          'Content-Type': 'index/json'
-        },
-        body: JSON.stringify({ username, password })
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Invalid username or password');
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Store the sessionId in localStorage
-        localStorage.setItem('sessionId', data.sessionId);
-        // Redirect to the dashboard
-        window.location.href = 'dashboard.html';
-      })
-      .catch(error => {
-        errorDiv.textContent = error.message;
-      });
+      fetch('https://c7327f38-26e2-45b4-a5a8-3e718fe8176f-00-19011i5iuaghc.pike.replit.dev/login', { // Replace with your actual Replit URL
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+     body: JSON.stringify({ username, password }),
+   })
+   .then(response => {
+     if (!response.ok) {
+       throw new Error('Invalid username or password');
+     }
+     return response.json();
+   })
+   .then(data => {
+     localStorage.setItem('sessionId', data.sessionId);
+     window.location.href = 'dashboard.html';
+   })
+   .catch(error => {
+     console.error('Error:', error); // Check for detailed error messages
+   });
     });
   </script>
 </body>
