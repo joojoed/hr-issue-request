@@ -55,36 +55,56 @@
   </div>
 
   <script>
-    const loginForm = document.getElementById('loginForm');
-    const errorDiv = document.getElementById('error');
+   const loginForm = document.getElementById('loginForm');
+const errorDiv = document.getElementById('error');
 
-    loginForm.addEventListener('submit', function(event) {
-      event.preventDefault();
+loginForm.addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the default form submission behavior
 
-      const username = loginForm.username.value;
-      const password = loginForm.password.value;
+  console.log('Login button pressed'); // Debugging step to ensure script is running
 
-      fetch('https://c7327f38-26e2-45b4-a5a8-3e718fe8176f-00-19011i5iuaghc.pike.replit.dev/login', { // Replace with your actual Replit URL
-     method: 'POST',
-     headers: {
-       'Content-Type': 'application/json',
-     },
-     body: JSON.stringify({ username, password }),
-   })
-   .then(response => {
-     if (!response.ok) {
-       throw new Error('Invalid username or password');
-     }
-     return response.json();
-   })
-   .then(data => {
-     localStorage.setItem('sessionId', data.sessionId);
-     window.location.href = 'dashboard.html';
-   })
-   .catch(error => {
-     console.error('Error:', error); // Check for detailed error messages
-   });
+  const username = loginForm.username.value.trim();
+  const password = loginForm.password.value.trim();
+
+  // Check if username and password are empty
+  if (!username || !password) {
+    errorDiv.textContent = 'Please enter both username and password.';
+    return;
+  }
+
+  console.log('Sending login request:', { username, password });
+
+  fetch('https://c7327f38-26e2-45b4-a5a8-3e718fe8176f-00-19011i5iuaghc.pike.replit.dev/login', { // Replace with your correct Replit server URL
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, password }),
+  })
+    .then(response => {
+      console.log('Login response received:', response);
+
+      if (!response.ok) {
+        throw new Error('Invalid username or password');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Login successful, data:', data);
+
+      // Store the sessionId in localStorage
+      localStorage.setItem('sessionId', data.sessionId);
+
+      // Redirect to the dashboard
+      window.location.href = 'dashboard.html';
+    })
+    .catch(error => {
+      console.error('Error during login fetch:', error);
+
+      // Display error message
+      errorDiv.textContent = error.message;
     });
+});
   </script>
 </body>
 </html>
